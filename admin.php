@@ -1,0 +1,62 @@
+<?php
+include 'db.php';
+
+$query = "SELECT * FROM messages ORDER BY created_at DESC";
+$result = mysqli_query($conn, $query);
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Masuk</title>
+<link rel="stylesheet" href="db.css">
+    <script language="JavaScript" type="text/javascript">
+        function checkDelete(){
+            return confirm('Are you sure?');
+        }
+</script>
+
+</head>
+<body>
+    <h1>Pesan Masuk</h1>
+    <table border="1" cellpadding="10" cellspacing="0">
+        <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Pesan</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+        </tr>
+
+        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+        <tr>
+            <td><?php echo $row['id']; ?></td>
+            <td><?php echo $row['name']; ?></td>
+            <td><?php echo $row['email']; ?></td>
+            <td><?php echo $row['message']; ?></td>
+            <td><?php echo $row['created_at']; ?></td>
+        
+        <td>
+            <a href="form-edit-pesan.php?id=<?php echo $row['id']; ?>">EDIT</a>
+            <a href="hapus-pesan.php?id=<?php echo $row['id']; ?>" onclick="return checkDelete()">HAPUS</a>
+        </td>
+        </tr>
+        <?php endwhile; ?>
+    </table>
+    <form action='contact.php' method='POST'>
+        <table>
+            <tr>
+                <center><td> <input type='submit' name='tambah' value='Tambah Pesan'></td>
+        </tr>
+        </table>
+        </form>
+        </table>
+        <form action='index.php' method='POST'>
+            <table>
+                <tr>
+                    <center><td> <input type='submit' name='kembali' value='Kembali ke Halaman Utama'> </td>
+        </tr>
+</body>
+</html>
